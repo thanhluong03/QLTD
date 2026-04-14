@@ -1,0 +1,97 @@
+@model IEnumerable<QLTD.Models.JobModel>
+@{
+    ViewData["Title"] = "Danh sách việc làm";
+    Layout = "~/Views/Admin/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <h1>
+        <i class="fas fa-briefcase"></i> Danh sách việc làm
+    </h1>
+</div>
+
+<div class="content-body">
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var job in Model)
+            {
+                <div class="col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header">
+                            <h5 class="mb-0">@job.Jobposition</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h6 class="text-muted">Địa chỉ công việc</h6>
+                                <p class="mb-2">
+                                    <i class="fas fa-map-marker-alt text-danger"></i> @job.Address
+                                </p>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Mức lương</h6>
+                                    <p class="text-success fw-bold">@job.Cash</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <h6 class="text-muted">Số lượng cần tuyển</h6>
+                                    <p>@job.Quantity <span class="text-muted">vị trí</span></p>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <h6 class="text-muted">Kinh nghiệm yêu cầu</h6>
+                                <p>@job.Experien</p>
+                            </div>
+
+                            <div class="mb-3">
+                                <h6 class="text-muted">Hình thức làm việc</h6>
+                                <p>
+                                    <span class="badge bg-primary">@job.WorkingStyle</span>
+                                </p>
+                            </div>
+
+                            <div class="mb-3">
+                                <h6 class="text-muted">Yêu cầu bằng cấp</h6>
+                                <p>@job.RequimentEducation</p>
+                            </div>
+
+                            <div class="mb-3">
+                                <h6 class="text-muted">Mô tả công việc</h6>
+                                <p class="text-muted">@job.Description</p>
+                            </div>
+
+                            <div class="row text-center mt-4">
+                                <div class="col-6">
+                                    <small class="text-muted">Bắt đầu</small>
+                                    <p class="mb-0">@job.StartTime.ToString("dd/MM/yyyy")</p>
+                                </div>
+                                <div class="col-6">
+                                    <small class="text-muted">Kết thúc</small>
+                                    <p class="mb-0">@job.EntimeTime.ToString("dd/MM/yyyy")</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-light">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary flex-grow-1">
+                                    <i class="fas fa-edit"></i> Chỉnh sửa
+                                </button>
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fas fa-trash"></i> Xóa
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info" role="alert">
+            <i class="fas fa-info-circle"></i> Chưa có việc làm nào
+        </div>
+    }
+</div>

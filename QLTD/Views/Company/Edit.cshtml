@@ -1,0 +1,132 @@
+@model QLTD.Models.CompanyModel
+@{
+    ViewData["Title"] = "Cập nhật thông tin công ty";
+    Layout = "~/Views/Admin/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <h1>
+        <i class="fas fa-edit"></i> Cập nhật thông tin công ty
+    </h1>
+</div>
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <i class="fas fa-info-circle"></i> Thông tin chi tiết
+                </div>
+                <div class="card-body">
+                    @if (TempData["Success"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <i class="fas fa-check-circle"></i> @TempData["Success"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form method="post" action="@Url.Action("Edit", "Company")">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="CompanyID" value="@Model.CompanyID" />
+
+                        <div class="mb-3">
+                            <label class="form-label" for="CompanyName">Tên công ty <span
+                                class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="CompanyName" name="CompanyName"
+                                       asp-for="CompanyName" required />
+                                <span class="text-danger">@Html.ValidationMessage("CompanyName")</span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="Email">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="Email" name="Email" asp-for="Email" required />
+                                <span class="text-danger">@Html.ValidationMessage("Email")</span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="Address">Địa chỉ <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="Address" name="Address" asp-for="Address"
+                                       required />
+                                <span class="text-danger">@Html.ValidationMessage("Address")</span>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="Scalecompany">Quy mô công ty <span
+                                    class="text-danger">*</span></label>
+                                    <select class="form-control" id="Scalecompany" name="Scalecompany"
+                                            asp-for="Scalecompany" required>
+                                        <option value="">-- Chọn quy mô --</option>
+                                        <option value="Startup">Startup</option>
+                                        <option value="10-50 nhân viên">Nhỏ (10-50 nhân viên)</option>
+                                        <option value="50-200 nhân viên">Vừa (50-200 nhân viên)</option>
+                                        <option value="200-1000 nhân viên">Lớn (200-1000 nhân viên)</option>
+                                        <option value=">1000 nhân viên">Rất Lớn (>1000 nhân viên)</option>
+                                    </select>
+                                    <span class="text-danger">@Html.ValidationMessage("Scalecompany")</span>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label" for="Status">Trạng thái</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="Status" name="Status"
+                                               asp-for="Status" />
+                                        <label class="form-check-label" for="Status">
+                                            Hoạt động
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Lưu thay đổi
+                                    </button>
+                                    <a href="@Url.Action("Index", "Company")" class="btn btn-secondary">
+                                        <i class="fas fa-times"></i> Hủy
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .btn {
+                padding: 10px 20px;
+                border-radius: 4px;
+                text-decoration: none;
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                transition: all 0.3s ease;
+            }
+
+            .btn-primary {
+                background-color: #667eea;
+                color: white;
+                border: none;
+            }
+
+            .btn-primary:hover {
+                background-color: #5568d3;
+                color: white;
+            }
+
+            .btn-secondary {
+                background-color: #6c757d;
+                color: white;
+                border: none;
+            }
+
+            .btn-secondary:hover {
+                background-color: #5a6268;
+                color: white;
+            }
+
+            .form-control:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+            }
+        </style>

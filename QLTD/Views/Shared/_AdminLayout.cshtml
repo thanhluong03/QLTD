@@ -1,0 +1,111 @@
+@{
+    Layout = null;
+    var currentPath = Context.Request.Path.ToString().ToLower();
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin - QLTD</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        body {
+            background: #f8f9fa;
+        }
+        .admin-sidebar {
+            min-height: 100vh;
+            background: #2176bd;
+            color: #fff;
+            padding: 0;
+        }
+        .admin-sidebar .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 70px;
+            background: #195a8a;
+            margin-bottom: 10px;
+        }
+        .admin-sidebar .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        .admin-sidebar .logo span {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #fff;
+        }
+        .admin-sidebar .nav-link {
+            color: #fff;
+            border-radius: 4px;
+            margin: 4px 8px;
+            font-weight: 500;
+        }
+        .admin-sidebar .nav-link.active, .admin-sidebar .nav-link:hover {
+            background: #fff;
+            color: #2176bd;
+        }
+        .admin-sidebar .logout {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+        }
+        .admin-sidebar .logout a {
+            color: #fff;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .admin-sidebar .logout a:hover {
+            text-decoration: underline;
+        }
+        .admin-content {
+            padding: 32px;
+        }
+        @@media (max-width: 768px) {
+            .admin-sidebar {
+                min-height: auto;
+                position: static;
+            }
+            .admin-sidebar .logout {
+                position: static;
+                margin-top: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row" style="min-height: 100vh;">
+            <nav class="col-md-2 admin-sidebar position-relative p-0">
+                <div class="logo">
+                    <img src="https://img.icons8.com/ios-filled/50/ffffff/administrator-male.png" alt="Logo" />
+                    <span>QLTD Admin</span>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link @(currentPath.Contains("companyinfo") ? "active" : "")" href="/Admin/CompanyInfo">Thông tin công ty</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentPath.Contains("applications") ? "active" : "")" href="/Admin/Applications">Danh sách đơn ứng tuyển</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(currentPath.Contains("jobs") ? "active" : "")" href="/Admin/Jobs">Danh sách job</a>
+                    </li>
+                </ul>
+                <div class="logout">
+                    <a href="/Account/Logout">Đăng xuất</a>
+                </div>
+            </nav>
+            <main role="main" class="col-md-10 admin-content">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

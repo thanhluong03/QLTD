@@ -1,0 +1,357 @@
+@{
+    ViewData["Title"] = ViewData["Title"] ?? "Admin";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - QLTD</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                background-color: #f5f5f5;
+            }
+
+            .admin-container {
+                display: flex;
+                min-height: 100vh;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: 280px;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px 0;
+                box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+                position: fixed;
+                height: 100vh;
+                left: 0;
+                top: 0;
+                overflow-y: auto;
+                z-index: 1000;
+            }
+
+            .sidebar-header {
+                padding: 20px;
+                text-align: center;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+                margin-bottom: 20px;
+            }
+
+            .sidebar-header h2 {
+                font-size: 24px;
+                margin: 0;
+                font-weight: bold;
+            }
+
+            .user-info {
+                padding: 15px 20px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 8px;
+                margin: 0 15px 20px;
+                cursor: pointer;
+                transition: all 0.3s ease;
+            }
+
+            .user-info:hover {
+                background: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
+
+            .user-info p {
+                margin: 5px 0;
+                font-size: 14px;
+            }
+
+            .user-info strong {
+                display: block;
+                font-size: 16px;
+                margin-bottom: 5px;
+            }
+
+            .menu-section {
+                margin-bottom: 30px;
+            }
+
+            .menu-section-title {
+                padding: 10px 20px;
+                font-size: 12px;
+                font-weight: bold;
+                color: rgba(255, 255, 255, 0.6);
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+
+            .menu-item {
+                padding: 15px 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                color: white;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                border-left: 4px solid transparent;
+                font-size: 15px;
+            }
+
+            .menu-item:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                border-left-color: white;
+                color: white;
+            }
+
+            .menu-item.active {
+                background-color: rgba(255, 255, 255, 0.2);
+                border-left-color: white;
+                font-weight: bold;
+            }
+
+            .menu-item i {
+                width: 24px;
+                text-align: center;
+                font-size: 18px;
+            }
+
+            .logout-btn {
+                padding: 15px 20px;
+                display: flex;
+                align-items: center;
+                gap: 15px;
+                color: white;
+                text-decoration: none;
+                transition: all 0.3s ease;
+                border-left: 4px solid transparent;
+                font-size: 15px;
+                margin-top: auto;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .logout-btn:hover {
+                background-color: rgba(255, 255, 255, 0.1);
+                border-left-color: white;
+                color: white;
+            }
+
+            .logout-btn i {
+                width: 24px;
+                text-align: center;
+                font-size: 18px;
+            }
+
+            /* Main Content */
+            .main-content {
+                flex: 1;
+                margin-left: 280px;
+                padding: 20px;
+            }
+
+            .content-header {
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                margin-bottom: 20px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .content-header h1 {
+                margin: 0;
+                color: #333;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .content-body {
+                background: white;
+                padding: 30px;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                min-height: 500px;
+            }
+
+            .card {
+                border: none;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                margin-bottom: 20px;
+            }
+
+            .card-header {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                border-radius: 8px 8px 0 0;
+                padding: 15px;
+                font-weight: bold;
+            }
+
+            .table {
+                margin-bottom: 0;
+            }
+
+            .table thead th {
+                border-bottom: 2px solid #dee2e6;
+                color: #667eea;
+                font-weight: bold;
+            }
+
+            .table tbody tr:hover {
+                background-color: #f8f9fa;
+            }
+
+            .badge {
+                padding: 8px 12px;
+                border-radius: 4px;
+                font-size: 12px;
+            }
+
+            .info-box {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 20px;
+            }
+
+            .info-box h3 {
+                margin-bottom: 10px;
+                font-weight: bold;
+            }
+
+            .info-box p {
+                margin: 5px 0;
+                font-size: 15px;
+            }
+    </style>
+    
+    <style>
+            @@media (max-width: 768px) {
+                .sidebar {
+                    width: 250px;
+                }
+
+                .main-content {
+                    margin-left: 250px;
+                    padding: 15px;
+                }
+
+                .content-body {
+                    padding: 15px;
+                }
+            }
+
+            @@media (max-width: 576px) {
+                .sidebar {
+                    width: 200px;
+                    padding: 15px 0;
+                }
+
+                .main-content {
+                    margin-left: 200px;
+                    padding: 10px;
+                }
+
+                .content-header h1 {
+                    font-size: 20px;
+                }
+
+                .menu-item {
+                    padding: 12px 15px;
+                    font-size: 14px;
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-briefcase"></i> Quản lý tuyển dụng</h2>
+            </div>
+
+            <a href="@Url.Action("Profile", "User")" class="user-info" style="text-decoration: none; color: white; display: block;">
+                <strong>@(Context.Session.GetString("FullName") ?? "User")</strong>
+                <p><i class="fas fa-user"></i> @(Context.Session.GetString("UserName") ?? "N/A")</p>
+                <p><i class="fas fa-envelope"></i> @(Context.Session.GetString("Email") ?? "N/A")</p>
+            </a>
+
+            <!-- Menu -->
+            @{
+                string role = Context.Session.GetString("Role") ?? "";
+            }
+
+            @if (role == "Admin")
+            {
+                <div class="menu-section">
+                    <div class="menu-section-title">Admin</div>
+                    <a href="@Url.Action("Index", "Admin")"
+                           class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["Action"]?.ToString() == "Index" ? "active" : "")">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Bảng điều khiển</span>
+                    </a>
+                    <a href="@Url.Action("Companies", "Admin")"
+                           class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["Action"]?.ToString() == "Companies" ? "active" : "")">
+                        <i class="fas fa-building"></i>
+                        <span>Danh sách công ty</span>
+                    </a>
+                    <a href="@Url.Action("Users", "Admin")"
+                           class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Admin" && ViewContext.RouteData.Values["Action"]?.ToString() == "Users" ? "active" : "")">
+                        <i class="fas fa-users"></i>
+                        <span>Danh sách user</span>
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="menu-section">
+                    <div class="menu-section-title">HR</div>
+                    <a href="@Url.Action("Index", "Company")"
+                           class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Company" ? "active" : "")">
+                        <i class="fas fa-building"></i>
+                        <span>Thông tin công ty</span>
+                    </a>
+                    <a href="@Url.Action("Index", "Application")"
+                           class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Application" ? "active" : "")">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Danh sách ứng tuyển</span>
+                    </a>
+                    <a href="@Url.Action("Index", "Job")"
+                           class="menu-item @(ViewContext.RouteData.Values["Controller"]?.ToString() == "Job" ? "active" : "")">
+                        <i class="fas fa-briefcase"></i>
+                        <span>Danh sách việc làm</span>
+                    </a>
+                </div>
+            }
+
+            <!-- Logout -->
+            <a href="@Url.Action("Logout", "Account")" class="logout-btn">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Đăng xuất</span>
+            </a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            @RenderBody()
+        </div>
+    </div>
+
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

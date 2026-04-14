@@ -13,6 +13,7 @@ namespace QLTD.Models.Repository
         public DbSet<UserModel> Users { get; set; }
         public DbSet<ApplicationModel> Applications { get; set; }
         public DbSet<CompanyModel> Companys { get; set; }
+        public DbSet<CompanyModel> Companies { get; set; } // Alias for proper naming
         public DbSet<JobModel> Jobs { get; set; }
         public DbSet<CandidateModel> Candidates { get; set; }
     }
