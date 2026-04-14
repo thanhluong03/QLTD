@@ -5,93 +5,118 @@
 }
 
 <div class="content-header">
-    <h1>
-        <i class="fas fa-briefcase"></i> Danh sách việc làm
-    </h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>
+            <i class="fas fa-briefcase"></i> Danh sách việc làm
+        </h1>
+        <a href="@Url.Action("Create", "Job")" class="btn btn-success">
+            <i class="fas fa-plus"></i> Thêm việc làm mới
+        </a>
+    </div>
 </div>
 
 <div class="content-body">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <!-- Search Form -->
+    <div class="mb-4">
+        <form method="get" action="@Url.Action("Index", "Job")" class="row g-3">
+            <div class="col-md-10">
+                <input type="text" name="search" class="form-control" 
+                       placeholder="Tìm kiếm theo vị trí, địa chỉ hoặc mô tả..." 
+                       value="@ViewData["SearchQuery"]">
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-search"></i> Tìm kiếm
+                </button>
+            </div>
+        </form>
+    </div>
+
     @if (Model != null && Model.Any())
     {
-        <div class="row">
-            @foreach (var job in Model)
-            {
-                <div class="col-md-6 mb-4">
-                    <div class="card h-100">
-                        <div class="card-header">
-                            <h5 class="mb-0">@job.Jobposition</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <h6 class="text-muted">Địa chỉ công việc</h6>
-                                <p class="mb-2">
-                                    <i class="fas fa-map-marker-alt text-danger"></i> @job.Address
-                                </p>
-                            </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <h6 class="text-muted">Mức lương</h6>
-                                    <p class="text-success fw-bold">@job.Cash</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <h6 class="text-muted">Số lượng cần tuyển</h6>
-                                    <p>@job.Quantity <span class="text-muted">vị trí</span></p>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <h6 class="text-muted">Kinh nghiệm yêu cầu</h6>
-                                <p>@job.Experien</p>
-                            </div>
-
-                            <div class="mb-3">
-                                <h6 class="text-muted">Hình thức làm việc</h6>
-                                <p>
-                                    <span class="badge bg-primary">@job.WorkingStyle</span>
-                                </p>
-                            </div>
-
-                            <div class="mb-3">
-                                <h6 class="text-muted">Yêu cầu bằng cấp</h6>
-                                <p>@job.RequimentEducation</p>
-                            </div>
-
-                            <div class="mb-3">
-                                <h6 class="text-muted">Mô tả công việc</h6>
-                                <p class="text-muted">@job.Description</p>
-                            </div>
-
-                            <div class="row text-center mt-4">
-                                <div class="col-6">
-                                    <small class="text-muted">Bắt đầu</small>
-                                    <p class="mb-0">@job.StartTime.ToString("dd/MM/yyyy")</p>
-                                </div>
-                                <div class="col-6">
-                                    <small class="text-muted">Kết thúc</small>
-                                    <p class="mb-0">@job.EntimeTime.ToString("dd/MM/yyyy")</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer bg-light">
-                            <div class="d-flex gap-2">
-                                <button class="btn btn-sm btn-primary flex-grow-1">
-                                    <i class="fas fa-edit"></i> Chỉnh sửa
-                                </button>
-                                <button class="btn btn-sm btn-danger">
-                                    <i class="fas fa-trash"></i> Xóa
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Vị trí</th>
+                            <th>Mức lương</th>
+                            <th>Số lượng</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var job in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@job.Jobposition</strong>
+                                </td>
+                                <td>
+                                    <span class="badge bg-success">@job.Cash</span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-info">@job.Quantity vị trí</span>
+                                </td>
+                                <td>
+                                    <div class="btn-group" role="group">
+                                        <a href="@Url.Action("Detail", "Job", new { id = job.JobID })" class="btn btn-sm btn-primary" title="Xem chi tiết">
+                                            <i class="fas fa-eye"></i> Xem chi tiết
+                                        </a>
+                                        <form method="post" action="@Url.Action("Delete", "Job", new { id = job.JobID })" 
+                                              style="display:inline;" onsubmit="return confirm('Bạn chắc chắn muốn xóa công việc này?');">
+                                            @Html.AntiForgeryToken()
+                                            <button type="submit" class="btn btn-sm btn-danger" title="Xóa">
+                                                <i class="fas fa-trash"></i> Xóa
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     }
     else
     {
         <div class="alert alert-info" role="alert">
-            <i class="fas fa-info-circle"></i> Chưa có việc làm nào
+            <i class="fas fa-info-circle"></i> 
+            @if (!string.IsNullOrEmpty(ViewData["SearchQuery"]?.ToString()))
+            {
+                <span>Không tìm thấy việc làm nào phù hợp với tìm kiếm của bạn</span>
+            }
+            else
+            {
+                <span>Chưa có việc làm nào</span>
+            }
         </div>
     }
 </div>
+
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    
+    .btn-group .btn {
+        border-radius: 0;
+    }
+    
+    .btn-group .btn:first-child {
+        border-radius: 0.25rem 0 0 0.25rem;
+    }
+    
+    .btn-group .btn:last-child {
+        border-radius: 0 0.25rem 0.25rem 0;
+    }
+</style>

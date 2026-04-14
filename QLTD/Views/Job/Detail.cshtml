@@ -1,0 +1,204 @@
+@model QLTD.Models.JobModel
+@{
+    ViewData["Title"] = "Chi tiết việc làm";
+    Layout = "~/Views/Admin/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>
+            <i class="fas fa-briefcase"></i> Chi tiết việc làm
+        </h1>
+        <a href="@Url.Action("Index", "Job")" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+        </a>
+    </div>
+</div>
+
+<div class="content-body">
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i> @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form asp-action="Detail" asp-controller="Job" method="post">
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <h6>Vui lòng kiểm tra lại các trường dưới đây:</h6>
+                                <div asp-validation-summary="All"></div>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        }
+
+                        <input type="hidden" asp-for="JobID">
+                        <input type="hidden" asp-for="CompanyID">
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="mb-3">
+                                    <label asp-for="Jobposition" class="form-label">Vị trí công việc *</label>
+                                    <input asp-for="Jobposition" class="form-control" required>
+                                    <span asp-validation-for="Jobposition" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="mb-3">
+                                    <label asp-for="Quantity" class="form-label">Số lượng cần tuyển *</label>
+                                    <input asp-for="Quantity" type="number" class="form-control" min="1" required>
+                                    <span asp-validation-for="Quantity" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Address" class="form-label">Địa chỉ làm việc *</label>
+                                    <input asp-for="Address" class="form-control" required>
+                                    <span asp-validation-for="Address" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Cash" class="form-label">Mức lương *</label>
+                                    <input asp-for="Cash" class="form-control" required>
+                                    <span asp-validation-for="Cash" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="Experien" class="form-label">Kinh nghiệm yêu cầu *</label>
+                                    <input asp-for="Experien" class="form-control" required>
+                                    <span asp-validation-for="Experien" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="WorkingStyle" class="form-label">Hình thức làm việc *</label>
+                                    <select asp-for="WorkingStyle" class="form-select" required>
+                                        <option value="">-- Chọn hình thức --</option>
+                                        <option value="Toàn thời gian">Toàn thời gian</option>
+                                        <option value="Bán thời gian">Bán thời gian</option>
+                                        <option value="Remote">Remote</option>
+                                    </select>
+                                    <span asp-validation-for="WorkingStyle" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="RequimentEducation" class="form-label">Yêu cầu bằng cấp *</label>
+                            <select asp-for="RequimentEducation" class="form-select" required>
+                                <option value="">-- Chọn bằng cấp --</option>
+                                <option value="Cao đẳng">Cao đẳng</option>
+                                <option value="Đại học">Đại học</option>
+                                <option value="Thạc sĩ">Thạc sĩ</option>
+                                <option value="Tiến sĩ">Tiến sĩ</option>
+                                <option value="Không yêu cầu">Không yêu cầu</option>
+                            </select>
+                            <span asp-validation-for="RequimentEducation" class="text-danger d-block"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label">Mô tả công việc *</label>
+                            <textarea asp-for="Description" class="form-control" rows="6" required></textarea>
+                            <span asp-validation-for="Description" class="text-danger d-block"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="StartTime" class="form-label">Thời gian bắt đầu *</label>
+                                    <input asp-for="StartTime" type="date" class="form-control" required>
+                                    <span asp-validation-for="StartTime" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label asp-for="EntimeTime" class="form-label">Thời gian kết thúc *</label>
+                                    <input asp-for="EntimeTime" type="date" class="form-control" required>
+                                    <span asp-validation-for="EntimeTime" class="text-danger d-block"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Lưu thay đổi
+                            </button>
+                            <a href="@Url.Action("Index", "Job")" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0"><i class="fas fa-info-circle"></i> Thông tin công việc</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <small class="text-muted">Vị trí</small>
+                        <p class="fw-bold">@Model.Jobposition</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted">Mức lương</small>
+                        <p class="fw-bold text-success">@Model.Cash</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted">Số lượng cần tuyển</small>
+                        <p class="fw-bold">@Model.Quantity vị trí</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted">Địa chỉ làm việc</small>
+                        <p class="fw-bold">@Model.Address</p>
+                    </div>
+
+                    <div class="mb-4">
+                        <small class="text-muted">Kinh nghiệm yêu cầu</small>
+                        <p class="fw-bold">@Model.Experien</p>
+                    </div>
+                    <div class="mb-4">
+                        <small class="text-muted">Yêu cầu bằng cấp</small>
+                        <p class="fw-bold">@Model.RequimentEducation</p>
+                    </div>
+                    <div class="mb-4">
+                        <small class="text-muted">Hình thức làm việc</small>
+                        <p><span class="badge bg-info">@Model.WorkingStyle</span></p>
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-3">
+                        <small class="text-muted">Thời gian bắt đầu</small>
+                        <p class="fw-bold">@Model.StartTime.ToString("dd/MM/yyyy")</p>
+                    </div>
+
+                    <div>
+                        <small class="text-muted">Thời gian kết thúc</small>
+                        <p class="fw-bold">@Model.EntimeTime.ToString("dd/MM/yyyy")</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
