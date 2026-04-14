@@ -1,0 +1,6 @@
+@model QLTD.Models.UserModel
+@{
+    Layout = null;
+}
+<input type="hidden" name="UserID" value="@Model.UserID" />
+<p>Are you sure you want to delete user <strong>@Model.FullName</strong>?</p>

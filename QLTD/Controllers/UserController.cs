@@ -55,31 +55,38 @@ namespace QLTD.Controllers
 
         // Handle edit
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Edit(UserModel user)
         {
             if (ModelState.IsValid)
             {
                 _userRepository.UpdateUser(user);
+                // Nếu là AJAX, trả về 200 OK
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                    return Ok();
                 return RedirectToAction(nameof(Index));
             }
+            // Nếu là AJAX, trả về lỗi
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return BadRequest();
             return View(user);
         }
 
         // Show delete confirmation
-        public IActionResult Delete(int id)
+        public IActionResult DeleteConfirm(int id)
         {
             var user = _userRepository.GetUserById(id);
             if (user == null) return NotFound();
             return View(user);
         }
 
-        // Handle delete
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteConfirmed(int id)
+        // Handle delete (AJAX or normal)
+        [HttpPost]
+        public IActionResult Delete(int id)
         {
             _userRepository.DeleteUser(id);
+            // Nếu là AJAX, trả về 200 OK
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+                return Ok();
             return RedirectToAction(nameof(Index));
         }
     }
