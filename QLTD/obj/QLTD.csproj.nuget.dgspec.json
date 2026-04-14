@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\QLTD.csproj": {}
+    "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD.csproj": {}
   },
   "projects": {
-    "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\QLTD.csproj": {
+    "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\QLTD.csproj",
+        "projectUniqueName": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD.csproj",
         "projectName": "QLTD",
-        "projectPath": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\QLTD.csproj",
+        "projectPath": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD.csproj",
         "packagesPath": "C:\\Users\\ACER NITRO\\.nuget\\packages\\",
-        "outputPath": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\obj\\",
+        "outputPath": "D:\\WebDevoloper\\QLTD\\QLTD\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ACER NITRO\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -45,6 +45,28 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

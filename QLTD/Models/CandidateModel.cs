@@ -18,5 +18,7 @@ namespace QLTD.Models
         public string Email { get; set; }
         [Required]
         public Boolean Status { get; set; }
+
+        public ICollection<ApplicationModel> Applications { get; set; } = new List<ApplicationModel>();
     }
 }

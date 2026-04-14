@@ -1,26 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\WebDevoloper\\QLTD\\QLTD\\",
+  "WorkspaceRootPath": "D:\\WebDevoloper\\QLTD\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|d:\\webdevoloper\\qltd\\qltd\\qltd\\models\\companymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|solutionrelative:qltd\\models\\companymodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|d:\\webdevoloper\\qltd\\qltd\\qltd\\models\\candidatemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|solutionrelative:qltd\\models\\candidatemodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|d:\\webdevoloper\\qltd\\qltd\\qltd\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|solutionrelative:qltd\\models\\usermodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|d:\\webdevoloper\\qltd\\qltd\\qltd\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|solutionrelative:qltd\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|d:\\webdevoloper\\qltd\\qltd\\qltd\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|solutionrelative:qltd\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|d:\\webdevoloper\\qltd\\qltd\\models\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{39A518F8-A033-46B2-BB19-2A0A4BCC6324}|QLTD\\QLTD.csproj|solutionrelative:qltd\\models\\repository\\userrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -79,66 +63,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "CompanyModel.cs",
-              "DocumentMoniker": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Models\\CompanyModel.cs",
-              "RelativeDocumentMoniker": "QLTD\\Models\\CompanyModel.cs",
-              "ToolTip": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Models\\CompanyModel.cs*",
-              "RelativeToolTip": "QLTD\\Models\\CompanyModel.cs*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAArAAAA",
+              "Title": "UserRepository.cs",
+              "DocumentMoniker": "D:\\WebDevoloper\\QLTD\\QLTD\\Models\\Repository\\UserRepository.cs",
+              "RelativeDocumentMoniker": "QLTD\\Models\\Repository\\UserRepository.cs",
+              "ToolTip": "D:\\WebDevoloper\\QLTD\\QLTD\\Models\\Repository\\UserRepository.cs",
+              "RelativeToolTip": "QLTD\\Models\\Repository\\UserRepository.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T13:53:59.692Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "CandidateModel.cs",
-              "DocumentMoniker": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Models\\CandidateModel.cs",
-              "RelativeDocumentMoniker": "QLTD\\Models\\CandidateModel.cs",
-              "ToolTip": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Models\\CandidateModel.cs*",
-              "RelativeToolTip": "QLTD\\Models\\CandidateModel.cs*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAsAAAAsAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T13:51:25.818Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "UserModel.cs",
-              "DocumentMoniker": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Models\\UserModel.cs",
-              "RelativeDocumentMoniker": "QLTD\\Models\\UserModel.cs",
-              "ToolTip": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Models\\UserModel.cs*",
-              "RelativeToolTip": "QLTD\\Models\\UserModel.cs*",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAASAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-13T13:47:39.662Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\appsettings.json",
-              "RelativeDocumentMoniker": "QLTD\\appsettings.json",
-              "ToolTip": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\appsettings.json",
-              "RelativeToolTip": "QLTD\\appsettings.json",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAkAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-04-13T13:31:55.772Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "QLTD\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\WebDevoloper\\QLTD\\QLTD\\QLTD\\Views\\Home\\Index.cshtml",
-              "RelativeToolTip": "QLTD\\Views\\Home\\Index.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-04-13T13:26:49.002Z",
+              "WhenOpened": "2026-04-14T04:31:12.886Z",
               "EditorCaption": ""
             }
           ]
