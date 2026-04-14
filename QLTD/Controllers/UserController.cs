@@ -23,7 +23,7 @@ namespace QLTD.Controllers
         // Show create form
         public IActionResult Create()
         {
-            return View();
+            return View(new UserModel());
         }
 
         // Handle create
@@ -76,7 +76,7 @@ namespace QLTD.Controllers
         {
             var user = _userRepository.GetUserById(id);
             if (user == null) return NotFound();
-            return View(user);
+            return View("Delete", user);
         }
 
         // Handle delete (AJAX or normal)

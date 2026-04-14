@@ -1,6 +1,13 @@
 @model QLTD.Models.UserModel
 @{
-    Layout = null;
+    ViewData["Title"] = "Delete User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<input type="hidden" name="UserID" value="@Model.UserID" />
-<p>Are you sure you want to delete user <strong>@Model.FullName</strong>?</p>
+<h2>Delete User</h2>
+<div class="alert alert-warning">Are you sure you want to delete user <strong>@Model.FullName</strong>?</div>
+@using (Html.BeginForm("Delete", "User", FormMethod.Post))
+{
+    <input type="hidden" name="id" value="@Model.UserID" />
+    <button type="submit" class="btn btn-danger">Delete</button>
+    <a href="@Url.Action("Index", "User")" class="btn btn-secondary">Cancel</a>
+}
