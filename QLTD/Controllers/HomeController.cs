@@ -15,7 +15,8 @@ namespace QLTD.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            // Redirect to Job Browse page - show job listings on home
+            return RedirectToAction("Browse", "Job");
         }
 
         public IActionResult Privacy()

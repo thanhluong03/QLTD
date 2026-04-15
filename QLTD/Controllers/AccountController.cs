@@ -79,7 +79,7 @@ namespace QLTD.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            return RedirectToAction("Login");
+            return RedirectToAction("Index", "Home");
         }
 
         // Helper method to verify password (simple comparison)

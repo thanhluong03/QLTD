@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using QLTD.Models;
 using QLTD.Models.Repository;
 
@@ -235,5 +236,149 @@ namespace QLTD.Controllers
             TempData["Success"] = "Xóa việc làm thành công!";
             return RedirectToAction(nameof(Index));
         }
+
+        /// <summary>
+        /// Action cho ứng viên duyệt tất cả công việc với lọc nâng cao
+        /// </summary>
+        public IActionResult Browse(string keyword = "", string location = "", string experience = "", 
+                                   string position = "", string workingStyle = "", string education = "",
+                                   int? salaryMin = null, int? salaryMax = null, int page = 1)
+        {
+            var query = _context.Jobs.AsQueryable();
+
+            // Filter bằng keyword
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                query = query.Where(j => 
+                    j.Jobposition.Contains(keyword, StringComparison.OrdinalIgnoreCase) ||
+                    j.Description.Contains(keyword, StringComparison.OrdinalIgnoreCase)
+                );
+            }
+
+            // Filter bằng địa điểm
+            if (!string.IsNullOrEmpty(location))
+            {
+                query = query.Where(j => j.Address.Contains(location, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Filter bằng kinh nghiệm
+            if (!string.IsNullOrEmpty(experience))
+            {
+                query = query.Where(j => j.Experien.Contains(experience, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Filter bằng vị trí công việc
+            if (!string.IsNullOrEmpty(position))
+            {
+                query = query.Where(j => j.Jobposition.Contains(position, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Filter bằng loại công việc
+            if (!string.IsNullOrEmpty(workingStyle))
+            {
+                query = query.Where(j => j.WorkingStyle.Contains(workingStyle, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Filter bằng yêu cầu học vấn
+            if (!string.IsNullOrEmpty(education))
+            {
+                query = query.Where(j => j.RequimentEducation.Contains(education, StringComparison.OrdinalIgnoreCase));
+            }
+
+            // Filter bằng khoảng lương
+            if (salaryMin.HasValue || salaryMax.HasValue)
+            {
+                // Giả sử Cash là string, cần parse để so sánh số
+                var jobs = query.ToList();
+                jobs = jobs.Where(j =>
+                {
+                    if (TryParseSalary(j.Cash, out var jobSalary))
+                    {
+                        if (salaryMin.HasValue && jobSalary < salaryMin.Value)
+                            return false;
+                        if (salaryMax.HasValue && jobSalary > salaryMax.Value)
+                            return false;
+                        return true;
+                    }
+                    return true;
+                }).ToList();
+                query = jobs.AsQueryable();
+            }
+
+            var totalJobs = query.Count();
+            var pageSize = 12;
+            var totalPages = (int)Math.Ceiling(totalJobs / (double)pageSize);
+
+            if (page < 1) page = 1;
+            if (page > totalPages && totalPages > 0) page = totalPages;
+
+            var jobs_list = query
+                .OrderByDescending(j => j.StartTime)
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .Include(j => j.Company)
+                .ToList();
+
+            var model = new JobSearchViewModel
+            {
+                Keyword = keyword,
+                Location = location,
+                Experience = experience,
+                Position = position,
+                WorkingStyle = workingStyle,
+                Education = education,
+                SalaryMin = salaryMin,
+                SalaryMax = salaryMax,
+                PageNumber = page,
+                PageSize = pageSize,
+                TotalJobs = totalJobs,
+                Jobs = jobs_list
+            };
+
+            return View(model);
+        }
+
+        private bool TryParseSalary(string salaryStr, out int salary)
+        {
+            salary = 0;
+            if (string.IsNullOrEmpty(salaryStr))
+                return false;
+
+            // Xóa các ký tự không phải số
+            var numericStr = new string(salaryStr.Where(char.IsDigit).ToArray());
+            return int.TryParse(numericStr, out salary);
+        }
+
+        /// <summary>
+        /// Xem chi tiết công việc cho ứng viên
+        /// </summary>
+        public IActionResult BrowseDetail(int id)
+        {
+            var job = _context.Jobs
+                .Include(j => j.Company)
+                .Include(j => j.Applications)
+                .FirstOrDefault(j => j.JobID == id);
+
+            if (job == null)
+                return NotFound();
+
+            return View(job);
+        }
+
+        /// <summary>
+        /// Ứng dụng cho một công việc
+        /// </summary>
+        [HttpPost]
+        public IActionResult ApplyJob(int jobId)
+        {
+            var userId = HttpContext.Session.GetString("UserID");
+            if (string.IsNullOrEmpty(userId))
+                return RedirectToAction("Login", "Account");
+
+            // TODO: Implement application logic
+            TempData["Success"] = "Bạn đã ứng tuyển thành công!";
+            return RedirectToAction("BrowseDetail", new { id = jobId });
+        }
     }
 }
+

@@ -1,0 +1,227 @@
+@model JobModel
+@{
+    ViewData["Title"] = Model.Jobposition;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/job-detail.css" />
+
+<div class="job-detail-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb-section">
+        <div class="container-wrapper">
+            <a href="@Url.Action("Browse", "Job")" class="breadcrumb-link">← Quay lại</a>
+        </div>
+    </div>
+
+    <div class="container-wrapper">
+        <div class="job-detail-content">
+            <!-- Main Content -->
+            <main class="job-detail-main">
+                <!-- Header Section -->
+                <div class="job-detail-header">
+                    <div class="job-hero">
+                        <div class="job-hero-content">
+                            <h1 class="job-position">@Model.Jobposition</h1>
+                            <div class="job-company-info">
+                                <span class="company-badge">@Model.Company?.CompanyName</span>
+                                <span class="location-badge">📍 @Model.Address</span>
+                            </div>
+                        </div>
+                        <button class="btn-favorite-detail" onclick="toggleFavorite(this)">♡ Lưu Công Việc</button>
+                    </div>
+
+                    <!-- Key Info -->
+                    <div class="key-info-grid">
+                        <div class="key-info-item">
+                            <span class="info-icon">💰</span>
+                            <div class="info-content">
+                                <p class="info-label">Mức Lương</p>
+                                <p class="info-value">@Model.Cash</p>
+                            </div>
+                        </div>
+                        <div class="key-info-item">
+                            <span class="info-icon">💼</span>
+                            <div class="info-content">
+                                <p class="info-label">Loại Công Việc</p>
+                                <p class="info-value">@Model.WorkingStyle</p>
+                            </div>
+                        </div>
+                        <div class="key-info-item">
+                            <span class="info-icon">📚</span>
+                            <div class="info-content">
+                                <p class="info-label">Kinh Nghiệm</p>
+                                <p class="info-value">@Model.Experien</p>
+                            </div>
+                        </div>
+                        <div class="key-info-item">
+                            <span class="info-icon">🎓</span>
+                            <div class="info-content">
+                                <p class="info-label">Yêu Cầu Học Vấn</p>
+                                <p class="info-value">@Model.RequimentEducation</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Description -->
+                <section class="job-section">
+                    <h2 class="section-title">Mô Tả Công Việc</h2>
+                    <div class="section-content job-description">
+                        @Html.Raw(Model.Description?.Replace("\n", "<br>"))
+                    </div>
+                </section>
+
+                <!-- Job Details -->
+                <section class="job-section">
+                    <h2 class="section-title">Chi Tiết Công Việc</h2>
+                    <div class="details-grid">
+                        <div class="detail-item">
+                            <h4>📍 Địa Điểm Làm Việc</h4>
+                            <p>@Model.Address</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>💼 Loại Công Việc</h4>
+                            <p>@Model.WorkingStyle</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>⏰ Ngày Bắt Đầu</h4>
+                            <p>@Model.StartTime.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>📅 Hạn Nộp Hồ Sơ</h4>
+                            <p>@Model.EntimeTime.ToString("dd/MM/yyyy")</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>👥 Số Lượng Tuyển</h4>
+                            <p>@Model.Quantity vị trí</p>
+                        </div>
+                        <div class="detail-item">
+                            <h4>📚 Yêu Cầu Học Vấn</h4>
+                            <p>@Model.RequimentEducation</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Requirements Section -->
+                <section class="job-section">
+                    <h2 class="section-title">Yêu Cầu Ứng Viên</h2>
+                    <div class="requirements">
+                        <div class="req-item">
+                            <span class="req-icon">✓</span>
+                            <p>Kinh Nghiệm: @Model.Experien</p>
+                        </div>
+                        <div class="req-item">
+                            <span class="req-icon">✓</span>
+                            <p>Học Vấn: @Model.RequimentEducation</p>
+                        </div>
+                        <div class="req-item">
+                            <span class="req-icon">✓</span>
+                            <p>Địa Điểm: @Model.Address</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Company Section -->
+                <section class="job-section company-section">
+                    <h2 class="section-title">Thông Tin Công Ty</h2>
+                    <div class="company-card">
+                        <div class="company-header">
+                            <h3 class="company-name">@Model.Company?.CompanyName</h3>
+                            <p class="company-address">📍 @Model.Company?.Address</p>
+                        </div>
+                        <div class="company-details">
+                            <div class="company-detail-item">
+                                <span>📊 Quy Mô</span>
+                                <p>@Model.Company?.Scalecompany</p>
+                            </div>
+                            <div class="company-detail-item">
+                                <span>📧 Email</span>
+                                <p>@Model.Company?.Email</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <!-- Sidebar -->
+            <aside class="job-detail-sidebar">
+                <!-- Apply Card -->
+                <div class="apply-card">
+                    <h3>Hãy Ứng Tuyển Ngay</h3>
+                    <p class="deadline">Hạn nộp hồ sơ: @Model.EntimeTime.ToString("dd/MM/yyyy")</p>
+                    
+                    <form method="post" action="@Url.Action("ApplyJob", "Job")">
+                        <input type="hidden" name="jobId" value="@Model.JobID" />
+                        <button type="submit" class="btn-apply">Ứng Tuyển Ngay</button>
+                    </form>
+
+                    <button class="btn-contact">📧 Liên Hệ Công Ty</button>
+                    <button class="btn-share">📤 Chia Sẻ</button>
+                </div>
+
+                <!-- Quick Info -->
+                <div class="quick-info-card">
+                    <h4>Thông Tin Nhanh</h4>
+                    <div class="info-list">
+                        <div class="info-row">
+                            <span class="label">Lương:</span>
+                            <span class="value">@Model.Cash</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Loại:</span>
+                            <span class="value">@Model.WorkingStyle</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Kinh Nghiệm:</span>
+                            <span class="value">@Model.Experien</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="label">Còn:</span>
+                            <span class="value">@Model.Quantity vị trí</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Similar Jobs -->
+                <div class="similar-jobs-card">
+                    <h4>Công Việc Tương Tự</h4>
+                    <p class="coming-soon">Đang cập nhật...</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleFavorite(btn) {
+    btn.textContent = btn.textContent.includes('♡') ? '♥ Đã Lưu' : '♡ Lưu Công Việc';
+    btn.classList.toggle('active');
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Share functionality
+    const shareBtn = document.querySelector('.btn-share');
+    if (shareBtn) {
+        shareBtn.addEventListener('click', function() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.querySelector('.job-position').textContent,
+                    text: 'Xem công việc này trên QLTD',
+                    url: window.location.href
+                });
+            } else {
+                alert('Sao chép link: ' + window.location.href);
+            }
+        });
+    }
+
+    // Contact company
+    const contactBtn = document.querySelector('.btn-contact');
+    if (contactBtn) {
+        contactBtn.addEventListener('click', function() {
+            alert('Tính năng liên hệ sẽ được cập nhật sớm.');
+        });
+    }
+});
+</script>

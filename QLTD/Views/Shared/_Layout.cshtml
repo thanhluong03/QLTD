@@ -23,9 +23,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Job" asp-action="Browse">Tìm Việc Làm</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
+                    <div class="d-flex gap-2 align-items-center">
+                        @if (string.IsNullOrEmpty(Context.Session.GetString("UserID")))
+                        {
+                            <a class="btn btn-primary btn-sm" asp-area="" asp-controller="Account" asp-action="Login">Đăng Nhập</a>
+                        }
+                        else
+                        {
+                            <span class="text-dark me-2">Xin chào, <strong>@Context.Session.GetString("FullName")</strong></span>
+                            <a class="btn btn-outline-danger btn-sm" asp-area="" asp-controller="Account" asp-action="Logout">Đăng Xuất</a>
+                        }
+                    </div>
                 </div>
             </div>
         </nav>

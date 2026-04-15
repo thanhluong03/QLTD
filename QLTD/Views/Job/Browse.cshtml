@@ -1,0 +1,240 @@
+@model JobSearchViewModel
+@{
+    ViewData["Title"] = "Tìm Kiếm Việc Làm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/job-browse.css" />
+
+<div class="job-browse-container">
+    <!-- Banner Header -->
+    <div class="job-banner">
+        <div class="banner-content">
+            <h1>Tìm Việc Làm Lý Tưởng Của Bạn</h1>
+            <p>Khám phá hàng ngàn cơ hội việc làm từ những nơi tuyệt vời nhất</p>
+        </div>
+    </div>
+
+    <div class="job-browse-wrapper">
+        <!-- LEFT SIDEBAR: FILTERS -->
+        <aside class="filter-sidebar">
+            <div class="filter-header">
+                <h3>Bộ Lọc Tìm Kiếm</h3>
+                <a href="@Url.Action("Browse", "Job")" class="btn-reset">Đặt lại</a>
+            </div>
+
+            <form method="get" class="filter-form">
+                <!-- Keyword Search -->
+                <div class="filter-group">
+                    <label>Từ Khóa</label>
+                    <input type="text" name="keyword" class="form-control" 
+                           placeholder="Vị trí, công ty..." value="@Model.Keyword" />
+                </div>
+
+                <!-- Location Filter -->
+                <div class="filter-group">
+                    <label>Địa Điểm</label>
+                    <select name="location" class="form-control">
+                        <option value="">-- Tất Cả Địa Điểm --</option>
+                        @if (Model.Location == "Hà Nội") { <option value="Hà Nội" selected>Hà Nội</option> } else { <option value="Hà Nội">Hà Nội</option> }
+                        @if (Model.Location == "TP. Hồ Chí Minh") { <option value="TP. Hồ Chí Minh" selected>TP. Hồ Chí Minh</option> } else { <option value="TP. Hồ Chí Minh">TP. Hồ Chí Minh</option> }
+                        @if (Model.Location == "Đà Nẵng") { <option value="Đà Nẵng" selected>Đà Nẵng</option> } else { <option value="Đà Nẵng">Đà Nẵng</option> }
+                        @if (Model.Location == "Hải Phòng") { <option value="Hải Phòng" selected>Hải Phòng</option> } else { <option value="Hải Phòng">Hải Phòng</option> }
+                        @if (Model.Location == "Cần Thơ") { <option value="Cần Thơ" selected>Cần Thơ</option> } else { <option value="Cần Thơ">Cần Thơ</option> }
+                        @if (Model.Location == "Quốc Tế") { <option value="Quốc Tế" selected>Quốc Tế</option> } else { <option value="Quốc Tế">Quốc Tế</option> }
+                    </select>
+                </div>
+
+                <!-- Experience Filter -->
+                <div class="filter-group">
+                    <label>Kinh Nghiệm</label>
+                    <select name="experience" class="form-control">
+                        <option value="">-- Tất Cả --</option>
+                        @if (Model.Experience == "Không có kinh nghiệm") { <option value="Không có kinh nghiệm" selected>Không có kinh nghiệm</option> } else { <option value="Không có kinh nghiệm">Không có kinh nghiệm</option> }
+                        @if (Model.Experience == "Dưới 1 năm") { <option value="Dưới 1 năm" selected>Dưới 1 năm</option> } else { <option value="Dưới 1 năm">Dưới 1 năm</option> }
+                        @if (Model.Experience == "1-3 năm") { <option value="1-3 năm" selected>1-3 năm</option> } else { <option value="1-3 năm">1-3 năm</option> }
+                        @if (Model.Experience == "3-5 năm") { <option value="3-5 năm" selected>3-5 năm</option> } else { <option value="3-5 năm">3-5 năm</option> }
+                        @if (Model.Experience == "5 năm trở lên") { <option value="5 năm trở lên" selected>5 năm trở lên</option> } else { <option value="5 năm trở lên">5 năm trở lên</option> }
+                    </select>
+                </div>
+
+                <!-- Position Filter -->
+                <div class="filter-group">
+                    <label>Vị Trí Công Việc</label>
+                    <input type="text" name="position" class="form-control" 
+                           placeholder="Lập trình viên, Designer..." value="@Model.Position" />
+                </div>
+
+                <!-- Salary Range -->
+                <div class="filter-group">
+                    <label>Mức Lương</label>
+                    <div class="salary-inputs">
+                        <input type="number" name="salaryMin" class="form-control" 
+                               placeholder="Từ" value="@Model.SalaryMin" />
+                        <span class="salary-separator">-</span>
+                        <input type="number" name="salaryMax" class="form-control" 
+                               placeholder="Đến" value="@Model.SalaryMax" />
+                    </div>
+                    <small>Đơn vị: triệu đồng/tháng</small>
+                </div>
+
+                <!-- Working Style -->
+                <div class="filter-group">
+                    <label>Loại Công Việc</label>
+                    <select name="workingStyle" class="form-control">
+                        <option value="">-- Tất Cả --</option>
+                        @if (Model.WorkingStyle == "Full-time") { <option value="Full-time" selected>Full-time</option> } else { <option value="Full-time">Full-time</option> }
+                        @if (Model.WorkingStyle == "Part-time") { <option value="Part-time" selected>Part-time</option> } else { <option value="Part-time">Part-time</option> }
+                        @if (Model.WorkingStyle == "Freelance") { <option value="Freelance" selected>Freelance</option> } else { <option value="Freelance">Freelance</option> }
+                        @if (Model.WorkingStyle == "Thực tập") { <option value="Thực tập" selected>Thực tập</option> } else { <option value="Thực tập">Thực tập</option> }
+                    </select>
+                </div>
+
+                <!-- Education -->
+                <div class="filter-group">
+                    <label>Yêu Cầu Học Vấn</label>
+                    <select name="education" class="form-control">
+                        <option value="">-- Tất Cả --</option>
+                        @if (Model.Education == "Không yêu cầu") { <option value="Không yêu cầu" selected>Không yêu cầu</option> } else { <option value="Không yêu cầu">Không yêu cầu</option> }
+                        @if (Model.Education == "Trung cấp") { <option value="Trung cấp" selected>Trung cấp</option> } else { <option value="Trung cấp">Trung cấp</option> }
+                        @if (Model.Education == "Cao đẳng") { <option value="Cao đẳng" selected>Cao đẳng</option> } else { <option value="Cao đẳng">Cao đẳng</option> }
+                        @if (Model.Education == "Đại học") { <option value="Đại học" selected>Đại học</option> } else { <option value="Đại học">Đại học</option> }
+                        @if (Model.Education == "Thạc sĩ") { <option value="Thạc sĩ" selected>Thạc sĩ</option> } else { <option value="Thạc sĩ">Thạc sĩ</option> }
+                        @if (Model.Education == "Tiến sĩ") { <option value="Tiến sĩ" selected>Tiến sĩ</option> } else { <option value="Tiến sĩ">Tiến sĩ</option> }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn-apply-filter">Áp Dụng Bộ Lọc</button>
+            </form>
+        </aside>
+
+        <!-- MAIN CONTENT: JOB LISTINGS -->
+        <main class="job-listings-main">
+            <!-- Search Results Header -->
+            <div class="search-results-header">
+                <div class="results-info">
+                    <h2>Kết Quả Tìm Kiếm</h2>
+                    <p>Tìm thấy <strong>@Model.TotalJobs</strong> việc làm</p>
+                </div>
+                <div class="sort-options">
+                    <span>Sắp xếp theo:</span>
+                    <select class="sort-select">
+                        <option>Mới nhất</option>
+                        <option>Liên quan nhất</option>
+                        <option>Lương cao nhất</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Job Cards Grid -->
+            <div class="job-cards-container">
+                @if (Model.Jobs.Any())
+                {
+                    @foreach (var job in Model.Jobs)
+                    {
+                        <div class="job-card">
+                            <div class="job-card-header">
+                                <div class="company-badge">
+                                    <h4 class="company-name">@job.Company?.CompanyName</h4>
+                                    <p class="company-location">📍 @job.Address</p>
+                                </div>
+                                <button class="btn-favorite" title="Lưu việc làm">♡</button>
+                            </div>
+
+                            <div class="job-card-body">
+                                <h3 class="job-title">@job.Jobposition</h3>
+                                <p class="job-description">@Html.Raw(job.Description?.Length > 120 ? job.Description.Substring(0, 120) + "..." : job.Description)</p>
+                            </div>
+
+                            <div class="job-card-meta">
+                                <div class="meta-item salary">
+                                    <span class="label">Mức lương</span>
+                                    <span class="value salary-amount">@job.Cash</span>
+                                </div>
+                                <div class="meta-item experience">
+                                    <span class="label">Kinh nghiệm</span>
+                                    <span class="value">@job.Experien</span>
+                                </div>
+                                <div class="meta-item job-type">
+                                    <span class="label">Loại công việc</span>
+                                    <span class="badge badge-primary">@job.WorkingStyle</span>
+                                </div>
+                            </div>
+
+                            <div class="job-card-footer">
+                                <div class="job-tags">
+                                    <span class="tag">@job.RequimentEducation</span>
+                                    <span class="tag quantity">Còn @job.Quantity vị trí</span>
+                                </div>
+                                <a href="@Url.Action("BrowseDetail", "Job", new { id = job.JobID })" class="btn-view-detail">Xem Chi Tiết →</a>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h3>Không tìm thấy việc làm phù hợp</h3>
+                        <p>Thử thay đổi các tiêu chí lọc hoặc tìm kiếm với từ khóa khác</p>
+                    </div>
+                }
+            </div>
+
+            <!-- Pagination -->
+            @if (Model.TotalPages > 1)
+            {
+                <div class="pagination">
+                    @if (Model.PageNumber > 1)
+                    {
+                        <a href="@Url.Action("Browse", "Job", new { page = 1, keyword = Model.Keyword, location = Model.Location, experience = Model.Experience })" 
+                           class="page-link">« Đầu tiên</a>
+                        <a href="@Url.Action("Browse", "Job", new { page = Model.PageNumber - 1, keyword = Model.Keyword, location = Model.Location, experience = Model.Experience })" 
+                           class="page-link">‹ Trước</a>
+                    }
+
+                    @for (int i = Math.Max(1, Model.PageNumber - 2); i <= Math.Min(Model.TotalPages, Model.PageNumber + 2); i++)
+                    {
+                        if (i == Model.PageNumber)
+                        {
+                            <span class="page-link active">@i</span>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Browse", "Job", new { page = i, keyword = Model.Keyword, location = Model.Location, experience = Model.Experience })" 
+                               class="page-link">@i</a>
+                        }
+                    }
+
+                    @if (Model.PageNumber < Model.TotalPages)
+                    {
+                        <a href="@Url.Action("Browse", "Job", new { page = Model.PageNumber + 1, keyword = Model.Keyword, location = Model.Location, experience = Model.Experience })" 
+                           class="page-link">Tiếp › </a>
+                        <a href="@Url.Action("Browse", "Job", new { page = Model.TotalPages, keyword = Model.Keyword, location = Model.Location, experience = Model.Experience })" 
+                           class="page-link">Cuối » </a>
+                    }
+                </div>
+            }
+        </main>
+    </div>
+</div>
+
+<style>
+    .job-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    }
+    
+    .btn-favorite:hover {
+        color: #e74c3c;
+    }
+</style>
+
+<script>
+document.querySelectorAll('.btn-favorite').forEach(btn => {
+    btn.addEventListener('click', function() {
+        this.textContent = this.textContent === '♡' ? '♥' : '♡';
+        this.classList.toggle('active');
+    });
+});
+</script>
